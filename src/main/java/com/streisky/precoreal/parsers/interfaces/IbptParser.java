@@ -1,6 +1,6 @@
 package com.streisky.precoreal.parsers.interfaces;
 
-import com.streisky.precoreal.model.Ibpt;
+import com.streisky.precoreal.models.Ibpt;
 
 import java.util.List;
 

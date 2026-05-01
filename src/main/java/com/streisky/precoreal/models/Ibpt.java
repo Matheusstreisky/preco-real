@@ -1,4 +1,4 @@
-package com.streisky.precoreal.model;
+package com.streisky.precoreal.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;

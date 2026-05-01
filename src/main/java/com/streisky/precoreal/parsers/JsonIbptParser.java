@@ -2,8 +2,8 @@ package com.streisky.precoreal.parsers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.streisky.precoreal.model.Ibpt;
-import com.streisky.precoreal.model.IbptId;
+import com.streisky.precoreal.models.Ibpt;
+import com.streisky.precoreal.models.IbptId;
 import com.streisky.precoreal.parsers.interfaces.IbptParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;

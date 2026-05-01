@@ -1,4 +1,4 @@
-package com.streisky.precoreal.model;
+package com.streisky.precoreal.models;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;

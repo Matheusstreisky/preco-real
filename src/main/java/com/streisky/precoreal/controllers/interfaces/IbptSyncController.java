@@ -1,6 +1,6 @@
 package com.streisky.precoreal.controllers.interfaces;
 
-import com.streisky.precoreal.dto.SyncResultDto;
+import com.streisky.precoreal.dtos.SyncResultDto;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 

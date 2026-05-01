@@ -1,4 +1,4 @@
-package com.streisky.precoreal.dto;
+package com.streisky.precoreal.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

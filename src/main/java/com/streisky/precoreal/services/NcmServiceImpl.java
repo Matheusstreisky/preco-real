@@ -2,7 +2,7 @@ package com.streisky.precoreal.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.streisky.precoreal.clients.interfaces.AiClient;
-import com.streisky.precoreal.dto.NcmResponseDto;
+import com.streisky.precoreal.dtos.NcmResponseDto;
 import com.streisky.precoreal.services.interfaces.NcmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

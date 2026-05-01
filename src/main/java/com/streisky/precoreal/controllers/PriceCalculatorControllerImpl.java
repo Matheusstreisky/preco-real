@@ -1,8 +1,8 @@
 package com.streisky.precoreal.controllers;
 
 import com.streisky.precoreal.controllers.interfaces.PriceCalculatorController;
-import com.streisky.precoreal.dto.PriceCalculationRequestDto;
-import com.streisky.precoreal.dto.PriceCalculationResponseDto;
+import com.streisky.precoreal.dtos.PriceCalculationRequestDto;
+import com.streisky.precoreal.dtos.PriceCalculationResponseDto;
 import com.streisky.precoreal.services.interfaces.PriceCalculatorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

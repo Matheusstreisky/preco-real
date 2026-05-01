@@ -1,6 +1,6 @@
 package com.streisky.precoreal.services.interfaces;
 
-import com.streisky.precoreal.dto.SyncResultDto;
+import com.streisky.precoreal.dtos.SyncResultDto;
 
 public interface IbptSyncService {
 

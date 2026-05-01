@@ -1,6 +1,6 @@
 package com.streisky.precoreal.services.interfaces;
 
-import com.streisky.precoreal.model.Ibpt;
+import com.streisky.precoreal.models.Ibpt;
 
 public interface IbptService {
 

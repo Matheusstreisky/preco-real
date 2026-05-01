@@ -1,8 +1,8 @@
 package com.streisky.precoreal.services;
 
 import com.streisky.precoreal.clients.interfaces.IbptDownloadClient;
-import com.streisky.precoreal.dto.SyncResultDto;
-import com.streisky.precoreal.model.Ibpt;
+import com.streisky.precoreal.dtos.SyncResultDto;
+import com.streisky.precoreal.models.Ibpt;
 import com.streisky.precoreal.parsers.interfaces.IbptParser;
 import com.streisky.precoreal.repositories.IbptRepository;
 import com.streisky.precoreal.services.interfaces.IbptSyncService;

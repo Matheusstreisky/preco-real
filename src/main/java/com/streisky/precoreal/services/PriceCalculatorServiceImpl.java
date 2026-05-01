@@ -1,8 +1,8 @@
 package com.streisky.precoreal.services;
 
-import com.streisky.precoreal.dto.PriceCalculationRequestDto;
-import com.streisky.precoreal.dto.PriceCalculationResponseDto;
-import com.streisky.precoreal.model.Ibpt;
+import com.streisky.precoreal.dtos.PriceCalculationRequestDto;
+import com.streisky.precoreal.dtos.PriceCalculationResponseDto;
+import com.streisky.precoreal.models.Ibpt;
 import com.streisky.precoreal.services.interfaces.IbptService;
 import com.streisky.precoreal.services.interfaces.PriceCalculatorService;
 import lombok.RequiredArgsConstructor;

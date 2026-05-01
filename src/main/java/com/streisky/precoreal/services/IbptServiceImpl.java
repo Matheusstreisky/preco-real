@@ -1,6 +1,6 @@
 package com.streisky.precoreal.services;
 
-import com.streisky.precoreal.model.Ibpt;
+import com.streisky.precoreal.models.Ibpt;
 import com.streisky.precoreal.repositories.IbptRepository;
 import com.streisky.precoreal.services.interfaces.IbptService;
 import lombok.RequiredArgsConstructor;

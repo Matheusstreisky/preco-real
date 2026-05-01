@@ -1,7 +1,7 @@
 package com.streisky.precoreal.controllers;
 
 import com.streisky.precoreal.controllers.interfaces.IbptSyncController;
-import com.streisky.precoreal.dto.SyncResultDto;
+import com.streisky.precoreal.dtos.SyncResultDto;
 import com.streisky.precoreal.services.interfaces.IbptSyncService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

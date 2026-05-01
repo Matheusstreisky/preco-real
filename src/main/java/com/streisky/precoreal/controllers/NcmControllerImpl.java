@@ -1,7 +1,7 @@
 package com.streisky.precoreal.controllers;
 
 import com.streisky.precoreal.controllers.interfaces.NcmController;
-import com.streisky.precoreal.dto.NcmResponseDto;
+import com.streisky.precoreal.dtos.NcmResponseDto;
 import com.streisky.precoreal.services.interfaces.NcmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

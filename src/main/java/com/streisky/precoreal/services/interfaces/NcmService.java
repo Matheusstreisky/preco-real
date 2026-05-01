@@ -1,6 +1,6 @@
 package com.streisky.precoreal.services.interfaces;
 
-import com.streisky.precoreal.dto.NcmResponseDto;
+import com.streisky.precoreal.dtos.NcmResponseDto;
 
 public interface NcmService {
 
