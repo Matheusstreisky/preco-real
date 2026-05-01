@@ -1,0 +1,26 @@
+package com.streisky.precoreal.controllers;
+
+import com.streisky.precoreal.controllers.interfaces.PriceCalculatorController;
+import com.streisky.precoreal.dto.PriceCalculationRequestDto;
+import com.streisky.precoreal.dto.PriceCalculationResponseDto;
+import com.streisky.precoreal.services.interfaces.PriceCalculatorService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/taxes")
+@RequiredArgsConstructor
+public class PriceCalculatorControllerImpl implements PriceCalculatorController {
+
+    private final PriceCalculatorService priceCalculatorService;
+
+    /** Calcula o preço sem impostos para um NCM + UF + preço informados. */
+    @Override
+    @PostMapping("/calculate")
+    public PriceCalculationResponseDto calculate(@RequestBody PriceCalculationRequestDto request) {
+        return priceCalculatorService.calculate(request);
+    }
+}
