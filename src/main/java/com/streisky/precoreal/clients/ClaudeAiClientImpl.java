@@ -15,7 +15,7 @@ public class ClaudeAiClientImpl implements AiClient {
 
     private final AnthropicClient client;
 
-    public ClaudeAiClientImpl(@Value("${anthropic.api-key:}") String apiKey) {
+    public ClaudeAiClientImpl(@Value("${anthropic.api-key}") String apiKey) {
         this.client = apiKey.isBlank()
             ? AnthropicOkHttpClient.fromEnv()
             : AnthropicOkHttpClient.builder().apiKey(apiKey).build();
