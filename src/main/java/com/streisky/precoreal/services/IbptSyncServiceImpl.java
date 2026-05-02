@@ -4,13 +4,12 @@ import com.streisky.precoreal.clients.interfaces.IbptDownloadClient;
 import com.streisky.precoreal.dtos.SyncResultDto;
 import com.streisky.precoreal.models.Ibpt;
 import com.streisky.precoreal.parsers.interfaces.IbptParser;
-import com.streisky.precoreal.repositories.IbptRepository;
+import com.streisky.precoreal.services.interfaces.IbptService;
 import com.streisky.precoreal.services.interfaces.IbptSyncService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ public class IbptSyncServiceImpl implements IbptSyncService {
 
     private final IbptDownloadClient ibptDownloadClient;
     private final IbptParser ibptParser;
-    private final IbptRepository ibptRepository;
+    private final IbptService ibptService;
 
     @Value("${ibpt.ufs}")
     private String[] ufs;
@@ -55,26 +54,19 @@ public class IbptSyncServiceImpl implements IbptSyncService {
 
     /** Baixa o CSV do IBPT para a UF e sincroniza. */
     @Override
-    @Transactional
     public int syncByUf(String uf) {
         log.info("Sincronizando UF {}...", uf);
-        String csv = ibptDownloadClient.downloadCsv(uf);
-        int count = saveIbpt(uf, csv);
+        String json = ibptDownloadClient.download(uf);
+        List<Ibpt> entries = ibptParser.parse(json, uf);
+        int count = ibptService.saveIbpt(uf, entries);
         log.info("UF {} sincronizada: {} registros", uf, count);
         return count;
     }
 
     /** Sincroniza uma UF a partir de um CSV fornecido diretamente. */
     @Override
-    @Transactional
-    public int syncByUfAndCsv(String uf, String csv) {
-        return saveIbpt(uf, csv);
-    }
-
-    private int saveIbpt(String uf, String csv) {
-        List<Ibpt> entries = ibptParser.parse(csv, uf);
-        ibptRepository.deleteByUf(uf.toUpperCase());
-        ibptRepository.saveAll(entries);
-        return entries.size();
+    public int syncByUfAndCsv(String uf, String json) {
+        List<Ibpt> entries = ibptParser.parse(json, uf);
+        return ibptService.saveIbpt(uf, entries);
     }
 }

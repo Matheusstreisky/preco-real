@@ -29,6 +29,10 @@ public class JsonIbptParser implements IbptParser {
             if (root.isArray()) {
                 return parseArray(root, uf);
             }
+            JsonNode ncmNode = root.path("ncm");
+            if (ncmNode.isArray()) {
+                return parseArray(ncmNode, uf);
+            }
             return List.of(parseNode(root, uf));
         } catch (Exception e) {
             log.error("Erro ao fazer parse do JSON da UF {}: {}", uf, e.getMessage());

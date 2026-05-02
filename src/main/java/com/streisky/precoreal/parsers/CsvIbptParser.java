@@ -1,5 +1,6 @@
 package com.streisky.precoreal.parsers;
 
+import com.streisky.precoreal.constants.IbptConstants;
 import com.streisky.precoreal.models.Ibpt;
 import com.streisky.precoreal.models.IbptId;
 import com.streisky.precoreal.parsers.interfaces.IbptParser;
@@ -17,20 +18,6 @@ import java.util.List;
 public class CsvIbptParser implements IbptParser {
 
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-    private static final int COLUNA_NCM                      = 0;
-    private static final int COLUNA_EXCECAO_TARIFARIA        = 1;
-    private static final int COLUNA_TIPO                     = 2;
-    private static final int COLUNA_DESCRICAO                = 3;
-    private static final int COLUNA_ALIQUOTA_NACIONAL        = 4;
-    private static final int COLUNA_ALIQUOTA_IMPORTADO       = 5;
-    private static final int COLUNA_ALIQUOTA_ESTADUAL        = 6;
-    private static final int COLUNA_ALIQUOTA_MUNICIPAL       = 7;
-    private static final int COLUNA_VIGENCIA_INICIO          = 8;
-    private static final int COLUNA_VIGENCIA_FIM             = 9;
-    private static final int COLUNA_CHAVE                    = 10;
-    private static final int COLUNA_VERSAO                   = 11;
-    private static final int COLUNA_FONTE                    = 12;
 
     /**
      * @param csv conteúdo do arquivo CSV da tabela IBPT (ISO-8859-1 já decodificado)
@@ -54,18 +41,18 @@ public class CsvIbptParser implements IbptParser {
     private Ibpt parseLine(String line, String uf) {
         String[] p = line.split(";", -1);
         Ibpt entry = new Ibpt();
-        entry.setId(new IbptId(p[COLUNA_NCM].trim(), uf));
-        entry.setTipo(p[COLUNA_TIPO].trim());
-        entry.setDescricao(p[COLUNA_DESCRICAO].trim());
-        entry.setAliquotaNacional(decimal(p[COLUNA_ALIQUOTA_NACIONAL]));
-        entry.setAliquotaImportado(decimal(p[COLUNA_ALIQUOTA_IMPORTADO]));
-        entry.setAliquotaEstadual(decimal(p[COLUNA_ALIQUOTA_ESTADUAL]));
-        entry.setAliquotaMunicipal(decimal(p[COLUNA_ALIQUOTA_MUNICIPAL]));
-        entry.setVigenciaInicio(date(p[COLUNA_VIGENCIA_INICIO]));
-        entry.setVigenciaFim(date(p[COLUNA_VIGENCIA_FIM]));
-        entry.setChave(p[COLUNA_CHAVE].trim());
-        entry.setVersao(p[COLUNA_VERSAO].trim());
-        entry.setFonte(p.length > COLUNA_FONTE ? p[COLUNA_FONTE].trim() : null);
+        entry.setId(new IbptId(p[IbptConstants.Csv.COLUNA_NCM].trim(), uf));
+        entry.setTipo(p[IbptConstants.Csv.COLUNA_TIPO].trim());
+        entry.setDescricao(p[IbptConstants.Csv.COLUNA_DESCRICAO].trim());
+        entry.setAliquotaNacional(decimal(p[IbptConstants.Csv.COLUNA_ALIQUOTA_NACIONAL]));
+        entry.setAliquotaImportado(decimal(p[IbptConstants.Csv.COLUNA_ALIQUOTA_IMPORTADO]));
+        entry.setAliquotaEstadual(decimal(p[IbptConstants.Csv.COLUNA_ALIQUOTA_ESTADUAL]));
+        entry.setAliquotaMunicipal(decimal(p[IbptConstants.Csv.COLUNA_ALIQUOTA_MUNICIPAL]));
+        entry.setVigenciaInicio(date(p[IbptConstants.Csv.COLUNA_VIGENCIA_INICIO]));
+        entry.setVigenciaFim(date(p[IbptConstants.Csv.COLUNA_VIGENCIA_FIM]));
+        entry.setChave(p[IbptConstants.Csv.COLUNA_CHAVE].trim());
+        entry.setVersao(p[IbptConstants.Csv.COLUNA_VERSAO].trim());
+        entry.setFonte(p.length > IbptConstants.Csv.COLUNA_FONTE ? p[IbptConstants.Csv.COLUNA_FONTE].trim() : null);
         return entry;
     }
 

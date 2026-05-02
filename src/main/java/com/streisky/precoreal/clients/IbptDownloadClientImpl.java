@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
-import java.nio.charset.StandardCharsets;
-
 @Component
 public class IbptDownloadClientImpl implements IbptDownloadClient {
 
@@ -16,20 +14,18 @@ public class IbptDownloadClientImpl implements IbptDownloadClient {
     private String urlTemplate;
 
     /**
-     * Baixa o CSV da tabela IBPT para a UF informada.
-     * Arquivos IBPT são geralmente encodados em ISO-8859-1.
+     * Baixa a tabela IBPT para a UF informada.
      */
     @Override
-    public String downloadCsv(String uf) {
+    public String download(String uf) {
         if (urlTemplate == null || urlTemplate.isBlank()) {
             throw new IllegalStateException(
                 "ibpt.download.url-template não configurado em application.properties");
         }
         String url = urlTemplate.replace("{uf}", uf);
-        byte[] bytes = restClient.get()
+        return restClient.get()
             .uri(url)
             .retrieve()
-            .body(byte[].class);
-        return new String(bytes, StandardCharsets.ISO_8859_1);
+            .body(String.class);
     }
 }
