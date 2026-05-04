@@ -15,6 +15,9 @@ import java.math.RoundingMode;
 @RequiredArgsConstructor
 public class PriceCalculatorServiceImpl implements PriceCalculatorService {
 
+    // Casas decimais intermediárias para manter precisão antes de arredondar o preço final
+    private static final int RATE_SCALE = 6;
+
     private final IbptService ibptService;
 
     /**
@@ -34,7 +37,7 @@ public class PriceCalculatorServiceImpl implements PriceCalculatorService {
 
         BigDecimal totalRate = federal.add(estadual).add(municipal);
         BigDecimal divisor = BigDecimal.ONE.add(
-            totalRate.divide(new BigDecimal("100"), 6, RoundingMode.HALF_UP));
+            totalRate.divide(new BigDecimal("100"), RATE_SCALE, RoundingMode.HALF_UP));
         BigDecimal priceWithoutTax = request.getPrice().divide(divisor, 2, RoundingMode.HALF_UP);
         BigDecimal taxAmount = request.getPrice().subtract(priceWithoutTax);
 

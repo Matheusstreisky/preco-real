@@ -41,26 +41,26 @@ public class CsvIbptParser implements IbptParser {
     private Ibpt parseLine(String line, String uf) {
         String[] p = line.split(";", -1);
         Ibpt entry = new Ibpt();
-        entry.setId(new IbptId(p[IbptConstants.Csv.COLUNA_NCM].trim(), uf));
-        entry.setTipo(p[IbptConstants.Csv.COLUNA_TIPO].trim());
-        entry.setDescricao(p[IbptConstants.Csv.COLUNA_DESCRICAO].trim());
-        entry.setAliquotaNacional(decimal(p[IbptConstants.Csv.COLUNA_ALIQUOTA_NACIONAL]));
-        entry.setAliquotaImportado(decimal(p[IbptConstants.Csv.COLUNA_ALIQUOTA_IMPORTADO]));
-        entry.setAliquotaEstadual(decimal(p[IbptConstants.Csv.COLUNA_ALIQUOTA_ESTADUAL]));
-        entry.setAliquotaMunicipal(decimal(p[IbptConstants.Csv.COLUNA_ALIQUOTA_MUNICIPAL]));
-        entry.setVigenciaInicio(date(p[IbptConstants.Csv.COLUNA_VIGENCIA_INICIO]));
-        entry.setVigenciaFim(date(p[IbptConstants.Csv.COLUNA_VIGENCIA_FIM]));
-        entry.setChave(p[IbptConstants.Csv.COLUNA_CHAVE].trim());
-        entry.setVersao(p[IbptConstants.Csv.COLUNA_VERSAO].trim());
-        entry.setFonte(p.length > IbptConstants.Csv.COLUNA_FONTE ? p[IbptConstants.Csv.COLUNA_FONTE].trim() : null);
+        entry.setId(new IbptId(p[IbptConstants.CsvColumn.NCM].trim(), uf));
+        entry.setTipo(p[IbptConstants.CsvColumn.TIPO].trim());
+        entry.setDescricao(p[IbptConstants.CsvColumn.DESCRICAO].trim());
+        entry.setAliquotaNacional(toDecimal(p[IbptConstants.CsvColumn.ALIQUOTA_NACIONAL]));
+        entry.setAliquotaImportado(toDecimal(p[IbptConstants.CsvColumn.ALIQUOTA_IMPORTADO]));
+        entry.setAliquotaEstadual(toDecimal(p[IbptConstants.CsvColumn.ALIQUOTA_ESTADUAL]));
+        entry.setAliquotaMunicipal(toDecimal(p[IbptConstants.CsvColumn.ALIQUOTA_MUNICIPAL]));
+        entry.setVigenciaInicio(parseDate(p[IbptConstants.CsvColumn.VIGENCIA_INICIO]));
+        entry.setVigenciaFim(parseDate(p[IbptConstants.CsvColumn.VIGENCIA_FIM]));
+        entry.setChave(p[IbptConstants.CsvColumn.CHAVE].trim());
+        entry.setVersao(p[IbptConstants.CsvColumn.VERSAO].trim());
+        entry.setFonte(p.length > IbptConstants.CsvColumn.FONTE ? p[IbptConstants.CsvColumn.FONTE].trim() : null);
         return entry;
     }
 
-    private BigDecimal decimal(String s) {
+    private BigDecimal toDecimal(String s) {
         return new BigDecimal(s.trim().replace(",", "."));
     }
 
-    private LocalDate date(String s) {
+    private LocalDate parseDate(String s) {
         try {
             return LocalDate.parse(s.trim(), DATE_FMT);
         } catch (Exception e) {

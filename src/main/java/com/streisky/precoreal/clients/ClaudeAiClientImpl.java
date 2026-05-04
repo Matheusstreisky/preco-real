@@ -5,27 +5,30 @@ import com.anthropic.client.okhttp.AnthropicOkHttpClient;
 import com.anthropic.models.messages.Message;
 import com.anthropic.models.messages.MessageCreateParams;
 import com.streisky.precoreal.clients.interfaces.AiClient;
-import org.springframework.beans.factory.annotation.Value;
+import com.streisky.precoreal.config.AnthropicProperties;
+import com.streisky.precoreal.exceptions.AiClientException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConditionalOnProperty(name = "ai.provider", havingValue = "claude")
+@ConditionalOnProperty(name = "ai.provider", havingValue = "anthropic")
 public class ClaudeAiClientImpl implements AiClient {
 
     private final AnthropicClient client;
+    private final String model;
+    private final long maxTokens;
 
-    public ClaudeAiClientImpl(@Value("${anthropic.api-key}") String apiKey) {
-        this.client = apiKey.isBlank()
-            ? AnthropicOkHttpClient.fromEnv()
-            : AnthropicOkHttpClient.builder().apiKey(apiKey).build();
+    public ClaudeAiClientImpl(AnthropicProperties props) {
+        this.client = AnthropicOkHttpClient.builder().apiKey(props.getApiKey()).build();
+        this.model = props.getModel();
+        this.maxTokens = props.getMaxTokens();
     }
 
     @Override
     public String chat(String systemPrompt, String userMessage) {
         MessageCreateParams params = MessageCreateParams.builder()
-            .model("claude-haiku-4-5")
-            .maxTokens(256L)
+            .model(model)
+            .maxTokens(maxTokens)
             .system(systemPrompt)
             .addUserMessage(userMessage)
             .build();
@@ -35,6 +38,6 @@ public class ClaudeAiClientImpl implements AiClient {
             .flatMap(block -> block.text().stream())
             .map(block -> block.text())
             .findFirst()
-            .orElseThrow(() -> new RuntimeException("Resposta vazia do Claude"));
+            .orElseThrow(() -> new AiClientException("Resposta vazia do Claude"));
     }
 }

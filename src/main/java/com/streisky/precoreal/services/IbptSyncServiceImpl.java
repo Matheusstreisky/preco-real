@@ -37,7 +37,7 @@ public class IbptSyncServiceImpl implements IbptSyncService {
             try {
                 int count = syncByUf(uf);
                 totalSynced += count;
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 errors++;
                 errorMessages.add("UF " + uf + ": " + e.getMessage());
                 log.error("Erro ao sincronizar UF {}: {}", uf, e.getMessage());

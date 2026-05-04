@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -50,19 +51,24 @@ public class IbptRepositoryCustomImpl implements IbptRepositoryCustom {
                 @Override
                 public void setValues(PreparedStatement ps, int j) throws SQLException {
                     Ibpt e = chunk.get(j);
-                    ps.setString(1, e.getId().getNcm());
-                    ps.setString(2, e.getId().getUf());
-                    ps.setString(3, e.getTipo());
-                    ps.setString(4, e.getDescricao());
-                    ps.setBigDecimal(5, e.getAliquotaNacional());
-                    ps.setBigDecimal(6, e.getAliquotaImportado());
-                    ps.setBigDecimal(7, e.getAliquotaEstadual());
-                    ps.setBigDecimal(8, e.getAliquotaMunicipal());
-                    ps.setObject(9, e.getVigenciaInicio());
-                    ps.setObject(10, e.getVigenciaFim());
-                    ps.setString(11, e.getChave());
-                    ps.setString(12, e.getVersao());
-                    ps.setString(13, e.getFonte());
+                    List<Object> values = Arrays.asList(
+                            e.getId().getNcm(),
+                            e.getId().getUf(),
+                            e.getTipo(),
+                            e.getDescricao(),
+                            e.getAliquotaNacional(),
+                            e.getAliquotaImportado(),
+                            e.getAliquotaEstadual(),
+                            e.getAliquotaMunicipal(),
+                            e.getVigenciaInicio(),
+                            e.getVigenciaFim(),
+                            e.getChave(),
+                            e.getVersao(),
+                            e.getFonte()
+                    );
+                    for (int i = 0; i < values.size(); i++) {
+                        ps.setObject(i + 1, values.get(i));
+                    }
                 }
 
                 @Override

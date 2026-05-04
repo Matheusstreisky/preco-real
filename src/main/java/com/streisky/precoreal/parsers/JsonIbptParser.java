@@ -35,8 +35,7 @@ public class JsonIbptParser implements IbptParser {
             }
             return List.of(parseNode(root, uf));
         } catch (Exception e) {
-            log.error("Erro ao fazer parse do JSON da UF {}: {}", uf, e.getMessage());
-            return List.of();
+            throw new IllegalArgumentException("JSON inválido para UF " + uf + ": " + e.getMessage(), e);
         }
     }
 

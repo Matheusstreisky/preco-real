@@ -2,11 +2,11 @@ package com.streisky.precoreal.clients;
 
 import com.openai.client.OpenAIClient;
 import com.openai.client.okhttp.OpenAIOkHttpClient;
-import com.openai.models.ChatModel;
 import com.openai.models.chat.completions.ChatCompletion;
 import com.openai.models.chat.completions.ChatCompletionCreateParams;
 import com.streisky.precoreal.clients.interfaces.AiClient;
-import org.springframework.beans.factory.annotation.Value;
+import com.streisky.precoreal.config.OpenAiProperties;
+import com.streisky.precoreal.exceptions.AiClientException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -17,26 +17,26 @@ import org.springframework.stereotype.Component;
 public class OpenAiClientImpl implements AiClient {
 
     private final OpenAIClient client;
+    private final String model;
+    private final long maxTokens;
 
-    public OpenAiClientImpl(@Value("${openai.api-key}") String apiKey) {
-        if (apiKey.isBlank()) {
-            throw new IllegalStateException(
-                "Chave OpenAI não encontrada. Configure a variável de ambiente OPENAI_API_KEY ou a propriedade openai.api-key.");
-        }
-        this.client = OpenAIOkHttpClient.builder().apiKey(apiKey).build();
+    public OpenAiClientImpl(OpenAiProperties props) {
+        this.client = OpenAIOkHttpClient.builder().apiKey(props.getApiKey()).build();
+        this.model = props.getModel();
+        this.maxTokens = props.getMaxTokens();
     }
 
     @Override
     public String chat(String systemPrompt, String userMessage) {
         ChatCompletionCreateParams params = ChatCompletionCreateParams.builder()
-            .model(ChatModel.GPT_4O_MINI)
-            .maxTokens(256L)
+            .model(model)
+            .maxCompletionTokens(maxTokens)
             .addSystemMessage(systemPrompt)
             .addUserMessage(userMessage)
             .build();
 
         ChatCompletion completion = client.chat().completions().create(params);
-        return completion.choices().get(0).message().content()
-            .orElseThrow(() -> new RuntimeException("Resposta vazia do OpenAI"));
+        return completion.choices().getFirst().message().content()
+            .orElseThrow(() -> new AiClientException("Resposta vazia do OpenAI"));
     }
 }

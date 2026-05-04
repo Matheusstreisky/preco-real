@@ -13,6 +13,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class IbptSyncControllerImpl implements IbptSyncController {
 
+    private static final String ENTRIES_SYNCED = "entriesSynced";
+
     private final IbptSyncService ibptSyncService;
 
     /** Baixa e sincroniza todos os estados a partir da URL configurada. */
@@ -27,7 +29,7 @@ public class IbptSyncControllerImpl implements IbptSyncController {
     @PostMapping("/sync/{uf}")
     public Map<String, Object> syncByUf(@PathVariable String uf) {
         int count = ibptSyncService.syncByUf(uf);
-        return Map.of("uf", uf.toUpperCase(), "entriesSynced", count);
+        return Map.of("uf", uf.toUpperCase(), ENTRIES_SYNCED, count);
     }
 
     /**
@@ -38,6 +40,6 @@ public class IbptSyncControllerImpl implements IbptSyncController {
     @PostMapping(value = "/sync/{uf}", consumes = "text/plain")
     public Map<String, Object> syncByUfAndCsv(@PathVariable String uf, @RequestBody String csv) {
         int count = ibptSyncService.syncByUfAndCsv(uf, csv);
-        return Map.of("uf", uf.toUpperCase(), "entriesSynced", count);
+        return Map.of("uf", uf.toUpperCase(), ENTRIES_SYNCED, count);
     }
 }
