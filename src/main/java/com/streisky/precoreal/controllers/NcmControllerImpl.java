@@ -16,7 +16,6 @@ public class NcmControllerImpl implements NcmController {
 
     private final NcmService ncmService;
 
-    /** Ex: GET /api/products/ncm?productName=Notebook Dell 15 */
     @Override
     @GetMapping("/ncm")
     public NcmResponseDto findNcm(@RequestParam String productName) {

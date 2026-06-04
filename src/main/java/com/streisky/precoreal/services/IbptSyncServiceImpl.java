@@ -26,7 +26,6 @@ public class IbptSyncServiceImpl implements IbptSyncService {
     @Value("${ibpt.ufs}")
     private String[] ufs;
 
-    /** Baixa e sincroniza todos os estados configurados em ibpt.ufs. */
     @Override
     public SyncResultDto syncAll() {
         int totalSynced = 0;
@@ -52,7 +51,6 @@ public class IbptSyncServiceImpl implements IbptSyncService {
             .build();
     }
 
-    /** Baixa o CSV do IBPT para a UF e sincroniza. */
     @Override
     public int syncByUf(String uf) {
         log.info("Sincronizando UF {}...", uf);
@@ -63,7 +61,6 @@ public class IbptSyncServiceImpl implements IbptSyncService {
         return count;
     }
 
-    /** Sincroniza uma UF a partir de um CSV fornecido diretamente. */
     @Override
     public int syncByUfAndCsv(String uf, String json) {
         List<Ibpt> entries = ibptParser.parse(json, uf);

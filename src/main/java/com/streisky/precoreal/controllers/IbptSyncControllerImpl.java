@@ -17,14 +17,12 @@ public class IbptSyncControllerImpl implements IbptSyncController {
 
     private final IbptSyncService ibptSyncService;
 
-    /** Baixa e sincroniza todos os estados a partir da URL configurada. */
     @Override
     @PostMapping("/sync")
     public SyncResultDto syncAll() {
         return ibptSyncService.syncAll();
     }
 
-    /** Baixa e sincroniza somente a UF informada. Ex: POST /api/ibpt/sync/SP */
     @Override
     @PostMapping("/sync/{uf}")
     public Map<String, Object> syncByUf(@PathVariable String uf) {
@@ -32,10 +30,6 @@ public class IbptSyncControllerImpl implements IbptSyncController {
         return Map.of("uf", uf.toUpperCase(), ENTRIES_SYNCED, count);
     }
 
-    /**
-     * Sincroniza uma UF a partir de um CSV enviado no corpo da requisição.
-     * Content-Type: text/plain — Ex: POST /api/ibpt/sync/SP (com body CSV)
-     */
     @Override
     @PostMapping(value = "/sync/{uf}", consumes = "text/plain")
     public Map<String, Object> syncByUfAndCsv(@PathVariable String uf, @RequestBody String csv) {

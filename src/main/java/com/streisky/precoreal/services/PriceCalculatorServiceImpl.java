@@ -20,12 +20,6 @@ public class PriceCalculatorServiceImpl implements PriceCalculatorService {
 
     private final IbptService ibptService;
 
-    /**
-     * Calcula o preço sem impostos usando a fórmula:
-     * preço_sem_imposto = preço / (1 + alíquota_total / 100)
-     *
-     * Nota: simplificação — na prática, ICMS é "por dentro" e IPI é "por fora".
-     */
     @Override
     public PriceCalculationResponseDto calculate(PriceCalculationRequestDto request) {
         Ibpt ibpt = ibptService.findByNcmAndUf(request.getNcm(), request.getUf());

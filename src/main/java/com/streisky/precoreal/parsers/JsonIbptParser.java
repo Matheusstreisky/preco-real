@@ -21,7 +21,6 @@ public class JsonIbptParser implements IbptParser {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    /** Aceita tanto um único objeto JSON quanto um array JSON. */
     @Override
     public List<Ibpt> parse(String json, String uf) {
         try {

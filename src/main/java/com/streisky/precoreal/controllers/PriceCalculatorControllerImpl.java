@@ -17,7 +17,6 @@ public class PriceCalculatorControllerImpl implements PriceCalculatorController 
 
     private final PriceCalculatorService priceCalculatorService;
 
-    /** Calcula o preço sem impostos para um NCM + UF + preço informados. */
     @Override
     @PostMapping("/calculate")
     public PriceCalculationResponseDto calculate(@RequestBody PriceCalculationRequestDto request) {

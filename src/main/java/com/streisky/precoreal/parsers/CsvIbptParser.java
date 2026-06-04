@@ -19,10 +19,6 @@ public class CsvIbptParser implements IbptParser {
 
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    /**
-     * @param csv conteúdo do arquivo CSV da tabela IBPT (ISO-8859-1 já decodificado)
-     * @param uf  código do estado (ex: SP, RJ)
-     */
     public List<Ibpt> parse(String csv, String uf) {
         String[] lines = csv.split("\n");
         List<Ibpt> entries = new ArrayList<>(lines.length);

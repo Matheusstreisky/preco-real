@@ -13,9 +13,6 @@ public class IbptDownloadClientImpl implements IbptDownloadClient {
     @Value("${ibpt.download.url-template}")
     private String urlTemplate;
 
-    /**
-     * Baixa a tabela IBPT para a UF informada.
-     */
     @Override
     public String download(String uf) {
         if (urlTemplate == null || urlTemplate.isBlank()) {
