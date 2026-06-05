@@ -20,3 +20,12 @@
 - Implementações usam apenas `@Override`, sem repetir a documentação
 - Exceção: métodos públicos que não pertencem a nenhuma interface devem ter Javadoc na própria classe (ex: `@ExceptionHandler` em `GlobalExceptionHandler`)
 - Todo Javadoc deve incluir `@param`, `@return` e `@throws` quando aplicável
+- Exceção: interfaces de controller **não usam Javadoc** — a documentação é feita via anotações Swagger (ver abaixo)
+
+## Swagger / OpenAPI
+
+- Todo endpoint público deve ter documentação Swagger na interface do controller
+- Usar `@Tag` na interface para agrupar os endpoints
+- Usar `@Operation(summary, description)` em cada método
+- Usar `@Parameter` nos parâmetros de path e query
+- Usar `@ApiResponse` para cada status HTTP possível (200, 400, 404, 500, etc.)
