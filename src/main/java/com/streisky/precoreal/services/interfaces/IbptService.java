@@ -1,18 +1,21 @@
 package com.streisky.precoreal.services.interfaces;
 
 import com.streisky.precoreal.models.Ibpt;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface IbptService {
 
     /**
-     * Retorna todos os registros IBPT de uma UF.
+     * Retorna os registros IBPT de uma UF de forma paginada.
      *
-     * @param uf sigla do estado (ex: SP, RJ)
-     * @return lista de registros IBPT da UF informada
+     * @param uf       sigla do estado (ex: SP, RJ)
+     * @param pageable configuração de paginação e ordenação
+     * @return página de registros IBPT da UF informada
      */
-    List<Ibpt> findAllByUf(String uf);
+    Page<Ibpt> findAllByUf(String uf, Pageable pageable);
 
     /**
      * Busca um registro IBPT pelo código NCM e UF.

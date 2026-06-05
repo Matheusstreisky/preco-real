@@ -7,19 +7,23 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.Optional;
 
 public interface IbptRepository extends JpaRepository<Ibpt, IbptId>, IbptRepositoryCustom {
 
     /**
-     * Retorna todos os registros IBPT de uma UF, ordenados por NCM.
+     * Retorna os registros IBPT de uma UF de forma paginada.
      *
-     * @param uf sigla do estado (ex: SP, RJ)
-     * @return lista de registros IBPT da UF informada
+     * @param uf       sigla do estado (ex: SP, RJ)
+     * @param pageable configuração de paginação e ordenação
+     * @return página de registros IBPT da UF informada
      */
-    @Query("SELECT e FROM Ibpt e WHERE e.id.uf = :uf ORDER BY e.id.ncm")
-    List<Ibpt> findAllByUf(@Param("uf") String uf);
+    @Query(value = "SELECT e FROM Ibpt e WHERE e.id.uf = :uf",
+           countQuery = "SELECT COUNT(e) FROM Ibpt e WHERE e.id.uf = :uf")
+    Page<Ibpt> findAllByUf(@Param("uf") String uf, Pageable pageable);
 
     /**
      * Busca um registro IBPT pelo código NCM e sigla da UF.

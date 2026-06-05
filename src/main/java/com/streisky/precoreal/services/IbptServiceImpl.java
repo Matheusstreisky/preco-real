@@ -4,6 +4,8 @@ import com.streisky.precoreal.models.Ibpt;
 import com.streisky.precoreal.repositories.IbptRepository;
 import com.streisky.precoreal.services.interfaces.IbptService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,8 +19,8 @@ public class IbptServiceImpl implements IbptService {
     private final IbptRepository ibptRepository;
 
     @Override
-    public List<Ibpt> findAllByUf(String uf) {
-        return ibptRepository.findAllByUf(uf.toUpperCase());
+    public Page<Ibpt> findAllByUf(String uf, Pageable pageable) {
+        return ibptRepository.findAllByUf(uf.toUpperCase(), pageable);
     }
 
     @Override

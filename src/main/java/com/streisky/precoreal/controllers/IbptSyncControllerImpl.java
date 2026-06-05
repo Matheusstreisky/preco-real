@@ -6,9 +6,11 @@ import com.streisky.precoreal.models.Ibpt;
 import com.streisky.precoreal.services.interfaces.IbptService;
 import com.streisky.precoreal.services.interfaces.IbptSyncService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -23,8 +25,8 @@ public class IbptSyncControllerImpl implements IbptSyncController {
 
     @Override
     @GetMapping
-    public List<Ibpt> findAllByUf(@RequestParam String uf) {
-        return ibptService.findAllByUf(uf);
+    public Page<Ibpt> findAllByUf(@RequestParam String uf, @PageableDefault(size = 20) Pageable pageable) {
+        return ibptService.findAllByUf(uf, pageable);
     }
 
     @Override

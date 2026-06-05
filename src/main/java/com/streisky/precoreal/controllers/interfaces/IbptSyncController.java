@@ -2,22 +2,24 @@ package com.streisky.precoreal.controllers.interfaces;
 
 import com.streisky.precoreal.dtos.SyncResultDto;
 import com.streisky.precoreal.models.Ibpt;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
 import java.util.Map;
 
 public interface IbptSyncController {
 
     /**
-     * Retorna todos os registros IBPT de uma UF.
+     * Retorna os registros IBPT de uma UF de forma paginada.
      *
-     * @param uf sigla do estado (ex: SP, RJ)
-     * @return lista de registros IBPT da UF informada
+     * @param uf       sigla do estado (ex: SP, RJ)
+     * @param pageable configuração de paginação e ordenação (page, size, sort)
+     * @return página de registros IBPT da UF informada
      */
-    List<Ibpt> findAllByUf(@RequestParam String uf);
+    Page<Ibpt> findAllByUf(@RequestParam String uf, Pageable pageable);
 
     /**
      * Baixa e sincroniza a tabela IBPT de todos os estados configurados.
