@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoSuchElementException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Map<String, String> handleNotFound(NoSuchElementException ex) {
-        return Map.of("error", ex.getMessage());
+        return Map.of("error", messageOf(ex));
     }
 
     /**
@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalStateException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> handleBadRequest(IllegalStateException ex) {
-        return Map.of("error", ex.getMessage());
+        return Map.of("error", messageOf(ex));
     }
 
     /**
@@ -44,6 +44,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Map<String, String> handleRuntime(RuntimeException ex) {
-        return Map.of("error", ex.getMessage());
+        return Map.of("error", messageOf(ex));
+    }
+
+    private String messageOf(Exception ex) {
+        return ex.getMessage() != null ? ex.getMessage() : ex.getClass().getSimpleName();
     }
 }

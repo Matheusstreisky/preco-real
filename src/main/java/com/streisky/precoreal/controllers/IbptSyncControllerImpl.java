@@ -1,8 +1,8 @@
 package com.streisky.precoreal.controllers;
 
 import com.streisky.precoreal.controllers.interfaces.IbptSyncController;
+import com.streisky.precoreal.dtos.IbptResponseDto;
 import com.streisky.precoreal.dtos.SyncResultDto;
-import com.streisky.precoreal.models.Ibpt;
 import com.streisky.precoreal.services.interfaces.IbptService;
 import com.streisky.precoreal.services.interfaces.IbptSyncService;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +25,8 @@ public class IbptSyncControllerImpl implements IbptSyncController {
 
     @Override
     @GetMapping
-    public Page<Ibpt> findAllByUf(@RequestParam String uf, @PageableDefault(size = 20) Pageable pageable) {
-        return ibptService.findAllByUf(uf, pageable);
+    public Page<IbptResponseDto> findAllByUf(@RequestParam String uf, @PageableDefault(size = 20) Pageable pageable) {
+        return ibptService.findAllByUf(uf, pageable).map(IbptResponseDto::fromEntity);
     }
 
     @Override

@@ -66,8 +66,8 @@ public class IbptRepositoryCustomImpl implements IbptRepositoryCustom {
                             e.getVersao(),
                             e.getFonte()
                     );
-                    for (int i = 0; i < values.size(); i++) {
-                        ps.setObject(i + 1, values.get(i));
+                    for (int idx = 0; idx < values.size(); idx++) {
+                        ps.setObject(idx + 1, values.get(idx));
                     }
                 }
 

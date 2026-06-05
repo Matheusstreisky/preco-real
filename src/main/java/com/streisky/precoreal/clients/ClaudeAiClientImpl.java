@@ -36,7 +36,7 @@ public class ClaudeAiClientImpl implements AiClient {
         Message response = client.messages().create(params);
         return response.content().stream()
             .flatMap(block -> block.text().stream())
-            .map(block -> block.text())
+            .map(textBlock -> textBlock.text())
             .findFirst()
             .orElseThrow(() -> new AiClientException("Resposta vazia do Claude"));
     }

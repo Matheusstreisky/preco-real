@@ -32,7 +32,6 @@ public class NcmServiceImpl implements NcmService {
         """;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
-
     private final AiClient aiClient;
 
     @Override

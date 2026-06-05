@@ -62,8 +62,8 @@ public class IbptSyncServiceImpl implements IbptSyncService {
     }
 
     @Override
-    public int syncByUfAndCsv(String uf, String json) {
-        List<Ibpt> entries = ibptParser.parse(json, uf);
+    public int syncByUfAndCsv(String uf, String content) {
+        List<Ibpt> entries = ibptParser.parse(content, uf);
         return ibptService.saveIbpt(uf, entries);
     }
 }
