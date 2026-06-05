@@ -2,6 +2,10 @@ package com.streisky.precoreal.controllers.interfaces;
 
 import com.streisky.precoreal.dtos.IbptResponseDto;
 import com.streisky.precoreal.dtos.SyncResultDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,38 +14,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
+@Tag(name = "IBPT", description = "Sincronização e consulta da tabela IBPT de alíquotas tributárias")
 public interface IbptSyncController {
 
-    /**
-     * Retorna os registros IBPT de uma UF de forma paginada.
-     *
-     * @param uf       sigla do estado (ex: SP, RJ)
-     * @param pageable configuração de paginação e ordenação (page, size, sort)
-     * @return página de registros IBPT da UF informada
-     */
-    Page<IbptResponseDto> findAllByUf(@RequestParam String uf, Pageable pageable);
+    @Operation(summary = "Listar registros por UF", description = "Retorna os registros IBPT de uma UF de forma paginada.")
+    @ApiResponse(responseCode = "200", description = "Página de registros IBPT da UF informada")
+    Page<IbptResponseDto> findAllByUf(
+            @Parameter(description = "Sigla do estado", example = "SP") @RequestParam String uf,
+            Pageable pageable);
 
-    /**
-     * Baixa e sincroniza a tabela IBPT de todos os estados configurados.
-     *
-     * @return resultado com totais de UFs processadas, erros e registros sincronizados
-     */
+    @Operation(summary = "Sincronizar todos os estados", description = "Baixa e sincroniza a tabela IBPT de todos os estados configurados.")
+    @ApiResponse(responseCode = "200", description = "Resultado com totais de UFs processadas, erros e registros sincronizados")
     SyncResultDto syncAll();
 
-    /**
-     * Baixa e sincroniza a tabela IBPT de uma UF específica.
-     *
-     * @param uf sigla do estado (ex: SP, RJ)
-     * @return mapa com a UF e a quantidade de registros sincronizados
-     */
-    Map<String, Object> syncByUf(@PathVariable String uf);
+    @Operation(summary = "Sincronizar por UF", description = "Baixa e sincroniza a tabela IBPT de uma UF específica.")
+    @ApiResponse(responseCode = "200", description = "UF e quantidade de registros sincronizados")
+    @ApiResponse(responseCode = "404", description = "UF não encontrada ou sem dados disponíveis")
+    Map<String, Object> syncByUf(
+            @Parameter(description = "Sigla do estado", example = "SP") @PathVariable String uf);
 
-    /**
-     * Sincroniza a tabela IBPT de uma UF a partir de CSV enviado no corpo da requisição.
-     *
-     * @param uf  sigla do estado (ex: SP, RJ)
-     * @param csv conteúdo CSV em texto plano
-     * @return mapa com a UF e a quantidade de registros sincronizados
-     */
-    Map<String, Object> syncByUfAndCsv(@PathVariable String uf, @RequestBody String csv);
+    @Operation(summary = "Sincronizar por UF via CSV", description = "Sincroniza a tabela IBPT de uma UF a partir de CSV enviado no corpo da requisição.")
+    @ApiResponse(responseCode = "200", description = "UF e quantidade de registros sincronizados")
+    @ApiResponse(responseCode = "400", description = "Conteúdo CSV inválido")
+    Map<String, Object> syncByUfAndCsv(
+            @Parameter(description = "Sigla do estado", example = "SP") @PathVariable String uf,
+            @RequestBody String csv);
 }
