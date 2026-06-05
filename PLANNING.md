@@ -24,6 +24,7 @@
 - [ ] Autenticação e autorização nos endpoints
 - [ ] Logs estruturados nos serviços
 - [ ] Rate limiting nos endpoints de IA
+- [ ] Integração com SonarCloud para análise estática de código na pipeline CI
 - [ ] Versionamento de API (`/api/v1/...`) *(opcional)*
 
 ---
