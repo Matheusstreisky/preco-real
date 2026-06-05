@@ -29,20 +29,20 @@ public class PriceCalculatorServiceImpl implements PriceCalculatorService {
         BigDecimal estadual = ibpt.getAliquotaEstadual();
         BigDecimal municipal = ibpt.getAliquotaMunicipal();
 
-        BigDecimal totalRate = federal.add(estadual).add(municipal);
+        BigDecimal totalTaxRate = federal.add(estadual).add(municipal);
         BigDecimal divisor = BigDecimal.ONE.add(
-            totalRate.divide(new BigDecimal("100"), RATE_SCALE, RoundingMode.HALF_UP));
+            totalTaxRate.divide(new BigDecimal("100"), RATE_SCALE, RoundingMode.HALF_UP));
         BigDecimal priceWithoutTax = request.getPrice().divide(divisor, 2, RoundingMode.HALF_UP);
-        BigDecimal taxAmount = request.getPrice().subtract(priceWithoutTax);
+        BigDecimal taxValue = request.getPrice().subtract(priceWithoutTax);
 
         return PriceCalculationResponseDto.builder()
             .originalPrice(request.getPrice())
             .priceWithoutTax(priceWithoutTax)
-            .taxAmount(taxAmount)
-            .totalRate(totalRate)
+            .taxValue(taxValue)
+            .totalTaxRate(totalTaxRate)
             .breakdown(PriceCalculationResponseDto.TaxBreakdown.builder()
                 .federal(federal)
-                .state(estadual)
+                .estadual(estadual)
                 .municipal(municipal)
                 .build())
             .build();

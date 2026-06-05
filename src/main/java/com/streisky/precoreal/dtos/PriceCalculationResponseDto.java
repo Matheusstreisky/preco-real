@@ -10,16 +10,17 @@ import java.math.BigDecimal;
 public class PriceCalculationResponseDto {
     private BigDecimal originalPrice;
     private BigDecimal priceWithoutTax;
-    private BigDecimal taxAmount;
-    /** Soma de todas as alíquotas aplicadas (%) */
-    private BigDecimal totalRate;
+    /** Valor monetário do imposto cobrado (originalPrice - priceWithoutTax) */
+    private BigDecimal taxValue;
+    /** Soma de todas as alíquotas aplicadas: federal + estadual + municipal (%) */
+    private BigDecimal totalTaxRate;
     private TaxBreakdown breakdown;
 
     @Data
     @Builder
     public static class TaxBreakdown {
         private BigDecimal federal;
-        private BigDecimal state;
+        private BigDecimal estadual;
         private BigDecimal municipal;
     }
 }
