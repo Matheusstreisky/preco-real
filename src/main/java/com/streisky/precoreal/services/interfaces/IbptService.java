@@ -7,6 +7,14 @@ import java.util.List;
 public interface IbptService {
 
     /**
+     * Retorna todos os registros IBPT de uma UF.
+     *
+     * @param uf sigla do estado (ex: SP, RJ)
+     * @return lista de registros IBPT da UF informada
+     */
+    List<Ibpt> findAllByUf(String uf);
+
+    /**
      * Busca um registro IBPT pelo código NCM e UF.
      *
      * @param ncm código NCM de 8 dígitos

@@ -17,6 +17,11 @@ public class IbptServiceImpl implements IbptService {
     private final IbptRepository ibptRepository;
 
     @Override
+    public List<Ibpt> findAllByUf(String uf) {
+        return ibptRepository.findAllByUf(uf.toUpperCase());
+    }
+
+    @Override
     public Ibpt findByNcmAndUf(String ncm, String uf) {
         return ibptRepository.findByNcmAndUf(ncm, uf.toUpperCase())
                 .orElseThrow(() -> new NoSuchElementException(

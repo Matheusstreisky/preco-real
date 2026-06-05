@@ -7,9 +7,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IbptRepository extends JpaRepository<Ibpt, IbptId>, IbptRepositoryCustom {
+
+    /**
+     * Retorna todos os registros IBPT de uma UF, ordenados por NCM.
+     *
+     * @param uf sigla do estado (ex: SP, RJ)
+     * @return lista de registros IBPT da UF informada
+     */
+    @Query("SELECT e FROM Ibpt e WHERE e.id.uf = :uf ORDER BY e.id.ncm")
+    List<Ibpt> findAllByUf(@Param("uf") String uf);
 
     /**
      * Busca um registro IBPT pelo código NCM e sigla da UF.

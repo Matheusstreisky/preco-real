@@ -2,10 +2,13 @@ package com.streisky.precoreal.controllers;
 
 import com.streisky.precoreal.controllers.interfaces.IbptSyncController;
 import com.streisky.precoreal.dtos.SyncResultDto;
+import com.streisky.precoreal.models.Ibpt;
+import com.streisky.precoreal.services.interfaces.IbptService;
 import com.streisky.precoreal.services.interfaces.IbptSyncService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -15,7 +18,14 @@ public class IbptSyncControllerImpl implements IbptSyncController {
 
     private static final String ENTRIES_SYNCED = "entriesSynced";
 
+    private final IbptService ibptService;
     private final IbptSyncService ibptSyncService;
+
+    @Override
+    @GetMapping
+    public List<Ibpt> findAllByUf(@RequestParam String uf) {
+        return ibptService.findAllByUf(uf);
+    }
 
     @Override
     @PostMapping("/sync")

@@ -1,12 +1,23 @@
 package com.streisky.precoreal.controllers.interfaces;
 
 import com.streisky.precoreal.dtos.SyncResultDto;
+import com.streisky.precoreal.models.Ibpt;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Map;
 
 public interface IbptSyncController {
+
+    /**
+     * Retorna todos os registros IBPT de uma UF.
+     *
+     * @param uf sigla do estado (ex: SP, RJ)
+     * @return lista de registros IBPT da UF informada
+     */
+    List<Ibpt> findAllByUf(@RequestParam String uf);
 
     /**
      * Baixa e sincroniza a tabela IBPT de todos os estados configurados.
