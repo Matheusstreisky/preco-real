@@ -22,6 +22,16 @@
 - Todo Javadoc deve incluir `@param`, `@return` e `@throws` quando aplicável
 - Exceção: interfaces de controller **não usam Javadoc** — a documentação é feita via anotações Swagger (ver abaixo)
 
+## Validação de Entrada
+
+- Controllers devem ter `@Validated` na implementação para ativar validação de parâmetros de método
+- DTOs de entrada devem ter anotações Bean Validation (`@NotNull`, `@NotBlank`, `@Size`, `@Positive`, etc.) nos campos obrigatórios
+- As constraints dos DTOs devem estar alinhadas com os constraints do banco de dados (ex: `@Size(max=10)` para `VARCHAR(10)`)
+- Parâmetros `@RequestParam` obrigatórios devem ter `@NotBlank` na interface do controller
+- Parâmetros `@PathVariable` não precisam de validação — o roteamento já garante a presença
+- Campos opcionais (ex: flags booleanas) não precisam de validação
+- `GlobalExceptionHandler` deve tratar `MethodArgumentNotValidException` (400) e `HandlerMethodValidationException` (400)
+
 ## Swagger / OpenAPI
 
 - Todo endpoint público deve ter documentação Swagger na interface do controller

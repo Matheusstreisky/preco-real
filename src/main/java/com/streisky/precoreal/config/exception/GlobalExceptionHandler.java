@@ -1,15 +1,49 @@
 package com.streisky.precoreal.config.exception;
 
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    /**
+     * Trata falhas de validação em {@code @RequestBody} anotados com {@code @Valid}.
+     *
+     * @param ex exceção com os erros de campo do bean
+     * @return mapa de campo → mensagem de erro
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new java.util.LinkedHashMap<>();
+        ex.getBindingResult().getFieldErrors()
+                .forEach(e -> errors.put(e.getField(), e.getDefaultMessage()));
+        return Map.of("errors", errors);
+    }
+
+    /**
+     * Trata falhas de validação em parâmetros de método ({@code @RequestParam}, {@code @PathVariable}).
+     *
+     * @param ex exceção com os resultados de validação por parâmetro
+     * @return mapa com lista de mensagens de erro
+     */
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, Object> handleHandlerMethodValidation(HandlerMethodValidationException ex) {
+        java.util.List<String> errors = ex.getAllValidationResults().stream()
+                .flatMap(r -> r.getResolvableErrors().stream())
+                .map(MessageSourceResolvable::getDefaultMessage)
+                .toList();
+        return Map.of("errors", errors);
+    }
 
     /**
      * Trata {@link NoSuchElementException} retornando HTTP 404.
